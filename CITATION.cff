@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "pharmequity: a systematic evaluation framework for allele-frequency disparities and pharmacogenomic dosing"
+version: 0.1.0
+date-released: "2026-09-22"
+authors:
+  - family-names: "YOUR-LAST-NAME"
+    given-names: "YOUR-FIRST-NAME"
+repository-code: "https://github.com/YOUR-USERNAME/pharmequity"
+license: MIT
