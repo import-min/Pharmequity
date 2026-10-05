@@ -19,6 +19,11 @@ from .dosing import lookup as dosing_lookup
 from .metrics import disparity_ratio, variance_across_populations, wilson_ci
 from .robustness import bootstrap_frequency_ci, detection_floor, reference_mismatch_impact
 
+def _fmt_ci(ci: list) -> str:
+    import math
+    if any(isinstance(v, float) and math.isnan(v) for v in ci):
+        return "n/a (bootstrap undefined at 0%/100%; see Wilson CI)"
+    return str(ci)
 
 def build_variant_report(
     gene: str,
