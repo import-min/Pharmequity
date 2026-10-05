@@ -116,7 +116,7 @@ def report_to_markdown(report: Dict) -> str:
     for p in report["per_population"]:
         lines.append(
             f"| {p['population']} | {p['allele_frequency']} | "
-            f"{p['wilson_ci_95']} | {p['bootstrap_ci_95']} | "
+            f"{p['wilson_ci_95']} | {_fmt_ci(p['bootstrap_ci_95'])} | "
             f"{'**yes**' if p['below_detection_floor'] else 'no'} |"
         )
     lines.append("")
