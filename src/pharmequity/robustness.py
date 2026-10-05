@@ -60,21 +60,31 @@ def detection_floor(n_alleles: int, observed_frequency: float, min_expected_coun
 def bootstrap_frequency_ci(count: int, n: int, n_boot: int = 5000, seed: int = 42) -> Dict[str, float]:
     """Bootstrap CI on an allele frequency by resampling the underlying
     Bernoulli draws implied by (count, n). Complements the closed-form
-    Wilson interval as a cross-check; the two should roughly agree, and
-    a large disagreement usually means n is small enough that the
-    normal approximation underlying Wilson is starting to break down.
+    Wilson interval as a cross-check.
+
+    At the boundary (count == 0 or count == n), a plug-in parametric
+    bootstrap is mathematically degenerate: resampling from
+    Binomial(n, 0) can only ever produce 0, so it reports a false
+    zero-width interval regardless of n. In that regime the bootstrap
+    is not a valid uncertainty estimate and is intentionally returned
+    as NaN here rather than as a misleadingly tight [0, 0]; rely on the
+    Wilson interval instead for boundary counts.
     """
     if n == 0:
         return {"boot_lo": float("nan"), "boot_hi": float("nan"), "wilson_lo": float("nan"), "wilson_hi": float("nan")}
+
+    wlo, whi = wilson_ci(count, n)
+
+    if count == 0 or count == n:
+        return {"boot_lo": float("nan"), "boot_hi": float("nan"), "wilson_lo": wlo, "wilson_hi": whi}
+
     rng = np.random.default_rng(seed)
     draws = rng.binomial(n, count / n, size=n_boot) / n
     boot_lo, boot_hi = np.percentile(draws, [2.5, 97.5])
-    wlo, whi = wilson_ci(count, n)
     return {
         "boot_lo": float(boot_lo), "boot_hi": float(boot_hi),
         "wilson_lo": wlo, "wilson_hi": whi,
     }
-
 
 def reference_mismatch_impact(
     calibration_frequency: float,
