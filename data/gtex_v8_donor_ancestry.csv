@@ -1,0 +1,5 @@
+group,donors,source
+EUR_AMERICAN,715,"GTEx Consortium, Science 369:1318 (2020): 715 (85.3%) European American"
+AFR_AMERICAN,103,"same: 103 (12.3%) African American"
+ASIAN_AMERICAN,12,"same: 12 (1.4%) Asian American"
+OTHER_OR_UNREPORTED,8,"DERIVED: 838 genotyped donors minus the three groups above; not stated in the paper"

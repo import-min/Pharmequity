@@ -1,0 +1,3 @@
+gene,variant_id,rsid,label
+# Fill with gnomAD-format ids (chrom-pos-ref-alt) for the build used by --dataset. Placeholders only:
+EXAMPLEGENE,1-000000-A-G,rsXXXXXXX,EXAMPLEGENE_example_variant
